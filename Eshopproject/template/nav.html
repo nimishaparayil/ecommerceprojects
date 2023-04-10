@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+<!--        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--        <span class="navbar-toggler-icon"></span>-->
+<!--       </button>-->
+<!--        <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
+<!--         <ul class="navbar-nav mr-auto">-->
+
+             <li><a href="{% url 'Shopstore:allProdCat' %}">All Products</a></li>
+
+
+              {% for cat in links %}
+              <li><a class="nav-item" href="{{cat.get_url}}">{{cat.name}}</a> </li>
+              {% endfor %}
+
+         {% if Item_count > 0 %}
+         <li class="nav_item">
+            <a class="nav-link" href="{% url 'cart:cart_details' %}"><i class="fa fa-shopping-cart"></i>({{Item_count}})</a>
+         </li>
+          {% endif %}
+
+<!--    </ul>-->
+
+    <form class="d-flex" action="{% url 'search_app:SearchResult' %}" method="get">
+        {% csrf_token %}
+        <input class="from-control-mr-sm-2" type="search" placeholder="Search" name="q" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit"><i class="fa fa-search"></i> </button>
+    </form>
+        </div>
+    </div>
+</nav>

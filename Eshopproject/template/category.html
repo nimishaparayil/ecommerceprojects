@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+     {% if category %}
+         {{ category.description|truncatewords:153 }}
+     {% else %}
+         Welcome to Allen Nani Dress Collections where you can buys different items.....
+     {% endif %}
+{% endblock %}
+
+{% block title %}
+     {% if category %}
+         {{ category.name }} -Allen Nani Dress Collections
+     {% else %}
+         See our New collections -Allen Nani Dress Collections
+     {% endif %}
+{% endblock %}
+
+{% block content %}
+     {% if category %}
+        <div>
+           <div>
+              <div class="row my_row_class" >
+                  <div class="mx-auto">
+                 <p><a href="{% url 'Shopstore:allProdCat' %}">Our Product Collections</a></p>
+              </div>
+              </div>
+           </div>
+        </div>
+     {% endif %}
+<div class="mx-auto">
+    {% if category %}
+         <img class="my_image"  src="{{category.image.url}}" alt="{{category.name}}">
+</div>
+    <br>
+<div>
+         <h1 class="text-center my_title">{{category.name}}</h1>
+         <p class="text-justify">{{category.description}}</p>
+</div>
+    {% else %}
+<div>
+<img class="my_image my_image_padding" src="{% static 'img/banner12.png' %}" alt="our products" width="1250px;" height="400px;">
+    </div>
+<br>
+<div>
+    <h1 class="text-center my_title">Our Products Collections</h1>
+    <p class="text-justify"> Fashionable and trendy-Stackable or worn alone-Variety of colors. Boutique Dress Boutique is a company that sells dresses and other accessories for every occasion. With the changing of the seasons, we want to make sure you have the perfect dress for any occasion.</p>
+</div>
+   {% endif %}
+
+<div class="container">
+    <div class="row mx-auto">
+          {% for product in products.object_list %}
+        <div class="my_bottom_margin col-9 col-sm-12 col-md-4 xol-lg-4">
+            <div class="card text-center" style="min-width:18rem">
+                <a href="{{product.get_url}}"><img class="card_img_top my_image" src="{{ product.image.url }}" alt="{{ product.name }}"></a>
+                <div class="card_body">
+                    <h4>{{product.name}}</h4>
+                     <p>{{product.price}}</p>
+               </div>
+            </div>
+        </div>
+
+         {% endfor %}
+    </div>
+
+    <div class="mx-auto">
+        {% if products.paginator.num_pages > 1 %}
+        <hr>
+        <div class="text-center">
+            {% for pg in products.paginator.page_range %}
+               <a href="?page={{pg}}" class="btn btn-light btn_sm {% if products.number == pg %} active {% endif %}">{{pg}} </a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <br>
+</div>
+{% endblock %}
